@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  libelle: MyString
+  prixHT: 1.5
+  tauxTVA: 1.5
+
+two:
+  libelle: MyString
+  prixHT: 1.5
+  tauxTVA: 1.5

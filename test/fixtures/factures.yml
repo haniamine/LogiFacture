@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2020-11-24 12:03:20
+  montantTTC: 1.5
+  montantHT: 1.5
+  montantTVA: 1
+  estValide: 1
+  estRegle: 1
+  modeReglement: MyString
+
+two:
+  date: 2020-11-24 12:03:20
+  montantTTC: 1.5
+  montantHT: 1.5
+  montantTVA: 1
+  estValide: 1
+  estRegle: 1
+  modeReglement: MyString

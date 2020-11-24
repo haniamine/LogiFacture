@@ -1,0 +1,52 @@
+<%= form_with(model: facture, local: true) do |form| %>
+  <% if facture.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(facture.errors.count, "error") %> prohibited this facture from being saved:</h2>
+
+      <ul>
+        <% facture.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.datetime_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :montantTTC %>
+    <%= form.text_field :montantTTC %>
+  </div>
+
+  <div class="field">
+    <%= form.label :montantHT %>
+    <%= form.text_field :montantHT %>
+  </div>
+
+  <div class="field">
+    <%= form.label :montantTVA %>
+    <%= form.number_field :montantTVA %>
+  </div>
+
+  <div class="field">
+    <%= form.label :estValide %>
+    <%= form.number_field :estValide %>
+  </div>
+
+  <div class="field">
+    <%= form.label :estRegle %>
+    <%= form.number_field :estRegle %>
+  </div>
+
+  <div class="field">
+    <%= form.label :modeReglement %>
+    <%= form.text_field :modeReglement %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @facture.date %>
+</p>
+
+<p>
+  <strong>Montantttc:</strong>
+  <%= @facture.montantTTC %>
+</p>
+
+<p>
+  <strong>Montantht:</strong>
+  <%= @facture.montantHT %>
+</p>
+
+<p>
+  <strong>Montanttva:</strong>
+  <%= @facture.montantTVA %>
+</p>
+
+<p>
+  <strong>Estvalide:</strong>
+  <%= @facture.estValide %>
+</p>
+
+<p>
+  <strong>Estregle:</strong>
+  <%= @facture.estRegle %>
+</p>
+
+<p>
+  <strong>Modereglement:</strong>
+  <%= @facture.modeReglement %>
+</p>
+
+<%= link_to 'Edit', edit_facture_path(@facture) %> |
+<%= link_to 'Back', factures_path %>
