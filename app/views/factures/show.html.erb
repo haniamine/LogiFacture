@@ -35,5 +35,15 @@
   <%= @facture.modeReglement %>
 </p>
 
-<%= link_to 'Edit', edit_facture_path(@facture) %> |
-<%= link_to 'Back', factures_path %>
+<% if session[:user]['estAdmin'] == 1  %>
+  <% if @estAdmin && facture.estValide == 0  %>
+
+    <div class="m-5">
+      <%= link_to 'Valider', validation_path(@facture.id),   {method: :delete,:class => "btn btn-success mr-3", :data => { confirm: 'Are you sure?' }} %>
+      <%= link_to 'Supprimer', @facture,  {method: :delete, :class => "btn btn-danger", :data => { confirm: 'Are you sure?' }} %>
+    </div>
+  <% end %>
+
+  <%= link_to 'Modifier la facture', edit_facture_path(@facture) %> |
+<% end %>
+  <%= link_to 'Revenir à mes factures', factures_path %>

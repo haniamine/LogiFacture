@@ -1,10 +1,18 @@
 class ProduitsController < ApplicationController
   before_action :set_produit, only: [:show, :edit, :update, :destroy]
 
+  before_action :adminValidation, only: [ :edit, :update, :destroy]
+
   # GET /produits
   # GET /produits.json
   def index
     @produits = Produit.all
+    @importing = false
+  end
+
+  def import
+    Produit.import(params[:file])
+    redirect_to produits_path, notice: "Produits importé avec succès"
   end
 
   # GET /produits/1

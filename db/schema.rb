@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_24_110620) do
+ActiveRecord::Schema.define(version: 2020_11_26_163131) do
 
   create_table "clients", force: :cascade do |t|
     t.string "nom"
@@ -20,16 +20,20 @@ ActiveRecord::Schema.define(version: 2020_11_24_110620) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "factures", force: :cascade do |t|
+  create_table "factures", id: :string, force: :cascade do |t|
     t.datetime "date"
     t.float "montantTTC"
     t.float "montantHT"
-    t.integer "montantTVA"
-    t.integer "estValide"
-    t.integer "estRegle"
+    t.float "montantTVA"
+    t.integer "estValide", default: 0
+    t.integer "estRegle", default: 0
     t.string "modeReglement"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "client_id"
+    t.integer "user_id"
+    t.index ["client_id"], name: "index_factures_on_client_id"
+    t.index ["user_id"], name: "index_factures_on_user_id"
   end
 
   create_table "produits", force: :cascade do |t|
@@ -48,4 +52,6 @@ ActiveRecord::Schema.define(version: 2020_11_24_110620) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "factures", "clients"
+  add_foreign_key "factures", "users"
 end

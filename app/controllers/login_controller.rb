@@ -1,52 +1,41 @@
 class LoginController < ApplicationController
 
+  $expiration = 5 # minutes
+
+  def setExpiration
+    return $expiration.minutes.from_now
+  end
 
   def home
-    if session[:user] != nil
-      @typeUser = session[:user]['estAdmin']
-      @username = session[:user]['username']
-    else
-      nilValue
-    end
+    userValidation
   end
 
   def login
-    if session[:user]['username']
-      @typeUser = session[:user]['estAdmin']
-      @username = session[:user]['username']
-    end
-    puts "let's login"
     @user = User.new
-
-
   end
 
 
   def connect
-    puts "Yeah you try to log in"
     username = get_params[:username]
     password = get_params[:password]
     user = User.find_by(username: username.downcase)
     if user && authenticate(user,username,password)
       # log in
-      session[:user] = {id: user.id, username:user.username, estAdmin:user.estAdmin }
+      session[:user] = {:id => user.id, :username=>user.username, :estAdmin=>user.estAdmin, :expiration => setExpiration}
       puts session[:user]
-      redirect_to root_path
+      redirect_to factures_path
     else
       # error message
-      redirect_to login_path
+      redirect_to login_path, danger: 'Vos identifiant sont incorrect!'
     end
   end
 
   def disconnect
     session[:user].clear
-    nilValue
-    redirect_to root_path
+    redirect_to root_path, success: 'Déconnexion réussie !'
   end
 
-  # private methods
-  #
-  # Only allow a list of trusted parameters through.
+
   def get_params
     params.require(:user).permit(:username, :password)
   end
@@ -58,22 +47,21 @@ class LoginController < ApplicationController
       false
     end
   end
-  def nilValue
-    @typeUser = nil
-    @username = nil
-  end
 
   # test
   def setSession
-    session[:user][:id] = 1
-    session[:user][:username] = 'heello'
-    session[:user][:estAdmin] = 'admin'
+    # session[:user][:id] = 1
+    # session[:user][:username] = 'aaa'
+    # session[:user][:estAdmin] = 1
+    # session[:user][:expiration] = $expiration
+    puts 'Session set'
+    session[:user] = {:id => 1, :username=>'aaa', :estAdmin=>1, :expiration => setExpiration}
+    puts session[:user].inspect
     redirect_to root_path
   end
 
   def clear
     session[:user].clear
-    nilValue
     redirect_to root_path
   end
 

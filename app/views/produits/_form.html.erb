@@ -11,22 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :libelle %>
-    <%= form.text_field :libelle %>
+    <%= form.text_field :libelle, class:'form-control'%>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :prixHT %>
-    <%= form.text_field :prixHT %>
+    <%= form.text_field :prixHT, class:'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :tauxTVA %>
-    <%= form.text_field :tauxTVA %>
+    <%= form.select(:tauxTVA, options_for_select([['0%',0.0],['7%',7.0],['14,2%',14.2]],:selected => form.object.tauxTVA),{}, {class: 'form-control'}) %>
+
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <% @prod_action = current_page?(new_produit_path) ? "Créer un produit" : "Modifier le produit"%>
+    <%= form.submit @prod_action,  class: 'btn btn-primary' %>
   </div>
 <% end %>

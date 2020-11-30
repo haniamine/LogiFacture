@@ -1,7 +1,7 @@
 <%= form_with(model: facture, local: true) do |form| %>
   <% if facture.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(facture.errors.count, "error") %> prohibited this facture from being saved:</h2>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(facture.errors.count, "erreur") %> ont interdit la sauvegarde de cette facture:</h2>
 
       <ul>
         <% facture.errors.full_messages.each do |message| %>
@@ -11,40 +11,79 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field" style="display: none">
     <%= form.label :date %>
-    <%= form.datetime_select :date %>
+    <%= form.datetime_select :date%>
   </div>
 
-  <div class="field">
-    <%= form.label :montantTTC %>
-    <%= form.text_field :montantTTC %>
-  </div>
-
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :montantHT %>
-    <%= form.text_field :montantHT %>
+    <%= form.text_field :montantHT, class:'form-control', id: 'ht',onchange: "ttcCalcul()" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :montantTVA %>
-    <%= form.number_field :montantTVA %>
+    <%= form.number_field :montantTVA, class:'form-control', id: 'tva',onchange: "ttcCalcul()"%>
   </div>
 
-  <div class="field">
+  <!-- Display montant -->
+  <script>
+    function ttcCalcul() {
+        ht = document.getElementById("ht").value || 0
+        tva = document.getElementById("tva").value || 0
+        ttc = parseFloat(tva) + parseFloat(ht)
+        console.log (""+ ttc + ' Dhs')
+        document.getElementById("ttc").value = ""+ ttc + ' Dhs'
+
+        if (ttc > 10000) disOpt()
+
+    }
+
+    function disOpt() {
+        var op = document.getElementById("modeReglement").getElementsByTagName("option");
+        for (var i = 0; i < op.length; i++) {
+            if (op[i].value.toLowerCase() == "espece") {
+                op[i].disabled = true
+                op[i].selected = false
+                op[i].title="Vous ne pouvez pas payer en espece une commande à plus de 10.000 dhs"
+                op[(i+1) % op.length].selected = true
+            }
+
+            // (op[i].value.toLowerCase() == "espece")
+            //     ? op[i].disabled = true
+            //     : op[i].disabled = false;
+        }
+    }
+  </script>
+
+  <div class="field form-group ">
+    <%= form.label "Montant TTC" %>
+    <%= form.text_field :montantTTC, class:'form-control',:disabled => true, id: 'ttc' %>
+  </div>
+
+  <div class="field form-group">
     <%= form.label :estValide %>
-    <%= form.number_field :estValide %>
+    <%#= form.number_field :estValide, class:'form-control' %>
+    <%= form.select(:estValide, options_for_select([['Non Validé',0],['Validé',1]]),{}, {class: 'form-control'}) %>
+
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :estRegle %>
-    <%= form.number_field :estRegle %>
+    <%#= form.number_field :estRegle, class:'form-control' %>
+    <%= form.select(:estValide, options_for_select([['Non Réglé',0],['Réglé',1]]),{}, {class: 'form-control'}) %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :modeReglement %>
-    <%= form.text_field :modeReglement %>
+    <%= form.select(:modeReglement, options_for_select(['Espece','Cheque','Virement']),{}, {class: 'form-control',id: 'modeReglement'}) %>
   </div>
+
+  <div class="field form-group">
+    <%= form.label :client_id %>
+    <%= form.number_field :client_id, class:'form-control' %>
+  </div>
+
 
   <div class="actions">
     <%= form.submit %>

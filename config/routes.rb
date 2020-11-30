@@ -1,16 +1,29 @@
 Rails.application.routes.draw do
 
 
+  get 'report/index'
   resources :clients
-  resources :produits
+  resources :produits do
+    collection { post :import }
+  end
   resources :users
   resources :factures
+  put 'valider/:id', to: 'factures#valider', as: 'validation'
+
   root to: 'login#home'
 
+  # Reporting
+  get 'reporting', to: 'report#index', as: 'report'
+
+  # Gestion de l'authentification
   get 'login', to: 'login#login', as: 'login'
   post 'login', to: 'login#connect'
   get 'logout', to: 'login#disconnect', as:'logout'
 
+
+  # error handling
+  get '403', to: 'login#login', as: 'forbiden'
+  get '404', to: 'login#login', as: 'notfound'
   # API
   get 'api/factures', to: 'factures#api'
 

@@ -1,34 +1,47 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Factures</h1>
+<div class="row mb-2">
+  <div class="col"><h1><%= @estAdmin ? 'Mes factures' : 'Listes des factures' %></h1></div>
 
-<table>
+  <div class="col" align="right">
+    <%= link_to "Ajouter une facture", new_facture_path, class: 'btn btn-primary' %>
+  </div>
+
+</div>
+<table class="table">
   <thead>
     <tr>
+      <th>#</th>
       <th>Date</th>
       <th>Montantttc</th>
       <th>Montantht</th>
       <th>Montanttva</th>
       <th>Estvalide</th>
       <th>Estregle</th>
-      <th>Modereglement</th>
-      <th colspan="3"></th>
+      <th>Mode de réglement</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @factures.each do |facture| %>
       <tr>
+        <td><%= facture.id %></td>
         <td><%= facture.date %></td>
         <td><%= facture.montantTTC %></td>
         <td><%= facture.montantHT %></td>
         <td><%= facture.montantTVA %></td>
-        <td><%= facture.estValide %></td>
-        <td><%= facture.estRegle %></td>
+        <td><%= facture.estValide == 1 ? "Validé" : "Non Validé"%></td>
+        <td><%= facture.estRegle == 1 ? "Réglé" : "Non Réglé" %></td>
         <td><%= facture.modeReglement %></td>
-        <td><%= link_to 'Show', facture %></td>
-        <td><%= link_to 'Edit', edit_facture_path(facture) %></td>
-        <td><%= link_to 'Destroy', facture, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <td><%= link_to 'Détails', facture, class: "btn btn-info" %></td>
+
+        <td><%= link_to 'Modifier', edit_facture_path(facture), class: "btn btn-warning #{facture.estValide == 0 ? '' : 'disabled'}" %></td>
+        <% if @estAdmin && facture.estValide == 0  %>
+              <td><%= link_to 'Valider', validation_path(facture.id),   {method: :put,:class => "btn btn-success", :data => { confirm: 'Are you sure?' }} %></td>
+              <td><%= link_to 'Supprimer', facture,  {method: :delete, :class => "btn btn-danger", :data => { confirm: 'Are you sure?' }} %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -36,4 +49,3 @@
 
 <br>
 
-<%= link_to 'New Facture', new_facture_path %>
