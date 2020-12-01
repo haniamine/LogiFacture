@@ -14,5 +14,7 @@ class Facture < ApplicationRecord
 
   scope :search, ->(search) { where("#{column_names.reject{ |col| col == 'created_at' || col == 'updated_at'}.join(" like '%#{search}%' or ")} like ?", "%#{search}%")}
 
+  #scope :group_by_month,   -> { group("date_trunc('month', created_at) ") }
+
 
 end

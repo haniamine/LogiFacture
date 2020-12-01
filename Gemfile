@@ -54,7 +54,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'jquery-rails'
 gem 'bootstrap'
 
-gem 'kaminari'
+gem 'kaminari' # pagination
+
 
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+
+gem 'groupdate' # group by date
+gem "chartkick"
