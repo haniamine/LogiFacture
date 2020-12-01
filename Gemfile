@@ -48,3 +48,13 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+
+# Custom l3ibat
+gem 'jquery-rails'
+gem 'bootstrap'
+
+gem 'kaminari'
+
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'

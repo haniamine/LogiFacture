@@ -1,23 +1,44 @@
 class FacturesController < ApplicationController
+  before_action :userValidation
   before_action :set_facture, only: [:show, :edit, :update, :destroy]
 
-  before_action :userValidation
 
   # GET /factures
   # GET /factures.json
   def index
     @estAdmin = admin?
-    @factures = if @estAdmin
-      Facture.all
-    else
-      Facture.where(user_id: session[:user]['id'])
-    end
-    #puts @factures.size()
+    id = session[:user]['id']
+    search = params[:search]&.downcase
+    @factures = if @estAdmin && !search
+                  Facture.all
+                elsif @estAdmin && search
+                  Facture.search(search).all
+                elsif search
+                  Facture.where(user_id: id).search(search)
+                else
+                  Facture.where(user_id: id)
+                end
+
+    @factures = @factures.page(params[:page]).per(7)
   end
 
   # GET /factures/1
   # GET /factures/1.json
   def show
+    @estAdmin = admin?
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "Facture No. #{@facture.id}",
+               page_size: 'A4',
+               template: "factures/pdf.html.erb",
+               layout: "pdf.html",
+               lowquality: true,
+               zoom: 1,
+               dpi: 75
+      end
+    end
+
   end
 
   # GET /factures/new
@@ -27,8 +48,7 @@ class FacturesController < ApplicationController
   end
 
   # GET /factures/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /factures
   # POST /factures.json
@@ -91,14 +111,17 @@ class FacturesController < ApplicationController
     facture = Facture.find(id)
     facture.estValide = 1
 
-    puts "Lest's Try to valdiaate ========="
-    puts facture.inspect
     if facture.save
-      redirect_to factures_path, success: 'La facture #{id} a été validé avec succes'
+
+      FactureMailer.validation_complete(facture).deliver_later
+
+      redirect_to factures_path, success: 'La facture ' + id + ' a été validé avec succes'
     else
       redirect_to factures_path, danger: "Il y'a un probleme lors de la validation"
     end
   end
+
+
 
 
   private
@@ -115,7 +138,7 @@ class FacturesController < ApplicationController
   end
 
   def generateId
-    lastId = Facture.last.id
+    lastId = Facture.last&.id
     return lastId.next if lastId != nil
     return "FA%05d" % 1
   end

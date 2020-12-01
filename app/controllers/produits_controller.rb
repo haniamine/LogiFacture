@@ -6,7 +6,7 @@ class ProduitsController < ApplicationController
   # GET /produits
   # GET /produits.json
   def index
-    @produits = Produit.all
+    @produits = Produit.all.page(params[:page]).per(10)
     @importing = false
   end
 

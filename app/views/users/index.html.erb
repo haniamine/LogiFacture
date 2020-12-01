@@ -20,9 +20,9 @@
         <td><%= user.username %></td>
         <td><%= user.password %></td>
         <td><%= user.estAdmin == 1 ? "Administrateur" : "Utilisateur" %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Détails', user %></td>
+        <td><%= link_to 'Modifier', edit_user_path(user) %></td>
+        <td><%= link_to 'Supprimer', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New User', new_user_path %>
+<%= link_to 'Inscrire un nouvel utilisateur', new_user_path %>

@@ -40,9 +40,9 @@
     }
 
     function disOpt() {
-        var op = document.getElementById("modeReglement").getElementsByTagName("option");
-        for (var i = 0; i < op.length; i++) {
-            if (op[i].value.toLowerCase() == "espece") {
+        const op = document.getElementById("modeReglement").getElementsByTagName("option");
+        for (let i = 0; i < op.length; i++) {
+            if (op[i].value.toLowerCase() === "espece") {
                 op[i].disabled = true
                 op[i].selected = false
                 op[i].title="Vous ne pouvez pas payer en espece une commande à plus de 10.000 dhs"
