@@ -52,7 +52,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Custom l3ibat
 gem 'jquery-rails'
-gem 'bootstrap'
+gem 'bootstrap', '~> 4.0.0'
 
 gem 'kaminari' # pagination
 
@@ -62,3 +62,7 @@ gem 'wkhtmltopdf-binary'
 
 gem 'groupdate' # group by date
 gem "chartkick"
+
+gem 'omniauth'  # authentification
+gem 'cancancan' # authorisation par model
+gem 'devise'    # authentification

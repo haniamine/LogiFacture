@@ -19,11 +19,15 @@
       <th>Regelement</th>
       <th>Mode de réglement</th>
       <th colspan="4">
+        <div class="d-flex justify-content-center">
+          <%= form_tag(factures_path,method: :get,class:"form-inline") do %>
+            <%= search_field_tag(:search,params[:search],class:"form-control col-sm-8") %>
+            <%#= submit_tag(raw("<i class=\"fab fa-twitter fa-2x\">Add To Cart</i>"),class: "btn btn-info ml-auto") %>
+            <%= button_tag '',class: "btn ml-1" do %><i class="fas fa-search"></i><% end %>
+          <% end %>
+        </div>
 
-        <%= form_tag(factures_path,method: :get,class:"form-inline") do %>
-          <%= search_field_tag(:search,params[:search],class:"form-control") %>
-          <%= submit_tag("Rechercher",class: "btn btn-info") %>
-      <% end %>
+
       </th>
     </tr>
   </thead>
@@ -40,13 +44,16 @@
         <td><%= facture.estRegle == 1 ? "Réglé" : "Non Réglé" %></td>
         <td><%= facture.modeReglement %></td>
 
-        <td><%= link_to 'Détails', facture, class: "btn btn-info" %></td>
+        <td>
+          <div class="btn-group">
+            <%= link_to 'Détails', facture, class: "btn btn-info" %>
+            <%= link_to 'Modifier', edit_facture_path(facture), class: "btn btn-warning #{facture.estValide == 0 ? '' : 'disabled'}" %>
+            <% @hidden = @estAdmin ? ( facture.estValide == 0 ? '' : 'hiddenVisibility') : 'hidden'  %>
+            <%= link_to 'Valider', validation_path(facture.id),   {method: :put,:class => "btn btn-success #{@hidden}", :data => { confirm: 'Are you sure?' }} %>
+            <%= link_to 'Supprimer', facture,  {method: :delete, :class => "btn btn-danger #{@hidden}", :data => { confirm: 'Are you sure?' }} %>
 
-        <td><%= link_to 'Modifier', edit_facture_path(facture), class: "btn btn-warning #{facture.estValide == 0 ? '' : 'disabled'}" %></td>
-        <% if @estAdmin && facture.estValide == 0  %>
-              <td><%= link_to 'Valider', validation_path(facture.id),   {method: :put,:class => "btn btn-success", :data => { confirm: 'Are you sure?' }} %></td>
-              <td><%= link_to 'Supprimer', facture,  {method: :delete, :class => "btn btn-danger", :data => { confirm: 'Are you sure?' }} %></td>
-        <% end %>
+          </div>
+        </td>
       </tr>
     <% end %>
   </tbody>

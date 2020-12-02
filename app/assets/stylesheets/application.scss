@@ -1,0 +1,90 @@
+@import "bootstrap";
+
+
+
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@fortawesome/fontawesome-free/scss/solid';
+@import '@fortawesome/fontawesome-free/scss/regular';
+@import '@fortawesome/fontawesome-free/scss/brands';
+@import '@fortawesome/fontawesome-free/scss/v4-shims';
+
+
+
+
+
+input[type=file]::-webkit-file-upload-button {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+}
+
+.custombold{
+    font-weight: bold;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.hiddenVisibility{
+  visibility: hidden;
+}
+
+
+/* footer */
+
+.copyright-text {
+  color: #dcdcdc;
+  text-align: center;
+  padding-top: 10px;
+}
+.copyright-text a {
+  color: #fd79a8;
+}
+
+.copyright-text a:hover {
+  color: white;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+.footerWrap {
+  position: absolute;
+  background-color: green;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background: #515151;
+}
+
+.mb-foot{
+  margin-bottom: 50px;
+}
+
+.tsize {
+  width: 500px;
+}
+.pd50{
+  padding: 50px;
+}
+
+.right-border {
+  border-right: 0.8px solid black;
+}

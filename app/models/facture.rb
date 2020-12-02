@@ -2,6 +2,10 @@ class Facture < ApplicationRecord
   belongs_to :client
   belongs_to :user
 
+  def self.idd
+
+  end
+
   scope :osearch, lambda { |search|
     cols = Facture.column_names.reject{ |col| col == 'created_at' || col == 'updated_at'}
     resp = ''
