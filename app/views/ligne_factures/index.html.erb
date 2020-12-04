@@ -1,0 +1,32 @@
+
+<h4>Ligne Factures</h4>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Produit</th>
+      <th>Facture</th>
+      <th>Quantite</th>
+      <th>Prixunitaireht</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ligne_factures.each do |ligne_facture| %>
+      <tr>
+        <td><%= ligne_facture.produit_id %></td>
+        <td><%= ligne_facture.facture_id %></td>
+        <td><%= ligne_facture.quantite %></td>
+        <td><%= ligne_facture.prixUnitaireHT %></td>
+        <td><%= link_to 'Details', ligne_facture %></td>
+        <td><%= link_to 'Modifier', edit_ligne_facture_path(ligne_facture) %></td>
+        <td><%= link_to 'Supprimer', ligne_facture, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Ajouter un produit', new_ligne_facture_path %>

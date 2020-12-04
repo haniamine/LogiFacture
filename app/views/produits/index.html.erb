@@ -5,6 +5,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Id</th>
       <th>Libelle</th>
       <th>Prix HT</th>
       <th>Taux TVA</th>
@@ -18,6 +19,7 @@
   <tbody>
     <% @produits.each do |produit| %>
       <tr>
+        <td><%= produit.id %></td>
         <td><%= produit.libelle %></td>
         <td><%= produit.prixHT %></td>
         <td><%= produit.tauxTVA %></td>

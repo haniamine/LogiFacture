@@ -11,10 +11,9 @@
   <thead>
     <tr>
       <th>#</th>
+      <th>Client</th>
       <th>Date</th>
-      <th>TTC</th>
-      <th>HT</th>
-      <th>TVA</th>
+      <th>Montant TTC</th>
       <th>Validation</th>
       <th>Regelement</th>
       <th>Mode de réglement</th>
@@ -36,10 +35,9 @@
     <% @factures.each do |facture| %>
       <tr>
         <td><%= facture.id %></td>
+        <td><%= facture.client.nom %></td>
         <td><%= facture.date %></td>
-        <td><%= facture.montantTTC %></td>
-        <td><%= facture.montantHT %></td>
-        <td><%= facture.montantTVA %></td>
+        <td data-toggle="tooltip" data-placement="top" title="HT: <%= facture.montantHT %>, TVA: <%= facture.montantTVA %>"><%= facture.montantTTC %></td>
         <td><%= facture.estValide == 1 ? "Validé" : "Non Validé"%></td>
         <td><%= facture.estRegle == 1 ? "Réglé" : "Non Réglé" %></td>
         <td><%= facture.modeReglement %></td>

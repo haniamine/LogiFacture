@@ -10,13 +10,13 @@ class FacturesController < ApplicationController
     id = session[:user]['id']
     search = params[:search]&.downcase
     @factures = if @estAdmin && !search
-                  Facture.all
+                  Facture.includes('client').all
                 elsif @estAdmin && search
-                  Facture.search(search).all
+                  Facture.includes('client').search(search).all
                 elsif search
-                  Facture.where(user_id: id).search(search)
+                  Facture.includes('client').where(user_id: id).search(search)
                 else
-                  Facture.where(user_id: id)
+                  Facture.includes('client').where(user_id: id)
                 end
 
     @factures = @factures.page(params[:page]).per(7)
@@ -26,13 +26,28 @@ class FacturesController < ApplicationController
   # GET /factures/1.json
   def show
     @estAdmin = admin?
+  
+    # Check si c'est sa facture
+    if !@estAdmin && @facture.user_id != session[:user]['id']
+      redirect_to factures_path, danger: "Ce n'est pas une de vos factures"
+    end
+
+
+    puts '--------------'
+    puts @facture.id
+    puts '--------------'
+    
+    if @facture.id
+      @ligne_factures = LigneFacture.where(facture_id: @facture.id)
+    end
+
     respond_to do |format|
       format.html
       format.pdf do
         render pdf: "Facture No. #{@facture.id}",
                page_size: 'A4',
-               template: "factures/pdf.html.erb",
-               layout: "pdf.html",
+               template: 'factures/pdf.html.erb',
+               layout: 'pdf.html',
                lowquality: true,
                zoom: 1,
                dpi: 75
@@ -57,7 +72,7 @@ class FacturesController < ApplicationController
   def create
     @facture = Facture.new(facture_params)
     @facture.user_id = session[:user]['id']
-    @facture.id = generateId
+    @facture.id = generate_id
 
     @facture.montantTTC = @facture.montantTVA + @facture.montantHT
     # Verification sum(Facture) >  encours
@@ -128,7 +143,11 @@ class FacturesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_facture
-    @facture = Facture.find(params[:id])
+    begin
+      @facture = Facture.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to factures_path, danger: "Numéro de facture invalide"
+    end
   end
 
   # Only allow a list of trusted parameters through.
@@ -137,9 +156,10 @@ class FacturesController < ApplicationController
     params.require(:facture).permit(:date, :montantTTC, :montantHT, :montantTVA, :estValide, :estRegle, :modeReglement, :client_id)
   end
 
-  def generateId
-    lastId = Facture.last&.id
-    return lastId.next if lastId != nil
-    return "FA%05d" % 1
+  def generate_id
+    last_id = Facture.last&.id
+    return last_id.next unless last_id.nil?
+
+    'FA%05d' % 1
   end
 end

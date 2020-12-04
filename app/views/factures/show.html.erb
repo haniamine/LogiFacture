@@ -1,26 +1,62 @@
+<h4 class="mb-2">Détails de la facture</h4>
+
 
 <%= render 'details', facture: @facture %>
 
-<div>
-  <% if @facture.estValide == 1  %>
-    <%= link_to 'Exporter la facture (PDF)', facture_path(@facture.id, :format => :pdf), class: "btn btn-info m-5" %>
+
+<!-- Lignes Factures -->
+
+<h5 class="mt-4">Contenu de la facture</h5>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Produit</th>
+    <th>Facture</th>
+    <th>Quantite</th>
+    <th>Prixunitaireht</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @ligne_factures.each do |ligne_facture| %>
+    <tr>
+      <td><%= ligne_facture.produit_id %></td>
+      <td><%= ligne_facture.facture_id %></td>
+      <td><%= ligne_facture.quantite %></td>
+      <td><%= ligne_facture.prixUnitaireHT %></td>
+      <td><%= link_to 'Details', ligne_facture %></td>
+      <td><%= link_to 'Modifier', edit_ligne_facture_path(ligne_facture) %></td>
+      <td><%= link_to 'Supprimer', ligne_facture, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
   <% end %>
-</div>
+  </tbody>
+</table>
 
-<% if @estAdmin  %>
-  <% if @facture.estValide == 0  %>
+<br>
 
-    <div class="m-5">
-      <%= link_to 'Valider', validation_path(@facture.id),   {method: :put,:class => "btn btn-success mr-3", :data => { confirm: 'Are you sure?' }} %>
-      <%= link_to 'Supprimer', @facture,  {method: :delete, :class => "btn btn-danger", :data => { confirm: 'Are you sure?' }} %>
-    </div>
+
+<div class="m-5">
+
+    <% if @facture.estValide == 1  %>
+      <%= link_to 'Exporter la facture (PDF)', facture_path(@facture.id, :format => :pdf), class: "btn btn-info ml-3 mr-3" %>
+    <% else %>
+      <%= link_to 'Ajouter un produit', new_ligne_facture_path, class: "btn btn-info ml-3 mr-3" %>
+    <% end %>
+
+
+  <% if @estAdmin  %>
+    <% if @facture.estValide == 0  %>
+
+
+        <%= link_to 'Valider', validation_path(@facture.id),   {method: :put,:class => "btn btn-success mr-3", :data => { confirm: 'Are you sure?' }} %>
+        <%= link_to 'Supprimer', @facture,  {method: :delete, :class => "btn btn-danger", :data => { confirm: 'Are you sure?' }} %>
+
+      <%= link_to 'Modifier la facture', edit_facture_path(@facture),class: "ml-2" %> |
+    <% end %>
 
 
   <% end %>
-
-
-
-  <%= link_to 'Modifier la facture', edit_facture_path(@facture) %> |
-<% end %>
   <%= link_to 'Revenir à mes factures', factures_path %>
-
+</div>

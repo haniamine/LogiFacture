@@ -9,31 +9,32 @@
 </p>
 
 <p>
-  <strong>Montantttc:</strong>
-  <%= @facture.montantTTC %>
+  <strong>Montant TTC:</strong>
+  <%= @facture.montantTTC %> Dhs
 </p>
 
 <p>
-  <strong>Montantht:</strong>
-  <%= @facture.montantHT %>
+  <strong>Montant HT:</strong>
+  <%= @facture.montantHT %> Dhs
 </p>
 
 <p>
-  <strong>Montanttva:</strong>
-  <%= @facture.montantTVA %>
+  <strong>Montant TVA:</strong>
+  <%= @facture.montantTVA %> Dhs
 </p>
 
 <p>
-  <strong>Estvalide:</strong>
-  <%= @facture.estValide %>
+  <strong>Validation:</strong>
+  <%= @facture.estValide == 1 ? "Validé" : "Non Validé"%>
 </p>
 
 <p>
-  <strong>Estregle:</strong>
-  <%= @facture.estRegle %>
+  <strong>Regelement:</strong>
+  <%= @facture.estRegle == 1 ? "Réglé" : "Non Réglé" %>
 </p>
 
+
 <p>
-  <strong>Modereglement:</strong>
+  <strong>Mode de Reglement:</strong>
   <%= @facture.modeReglement %>
 </p>

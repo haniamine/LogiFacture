@@ -1,0 +1,22 @@
+<p>
+  <strong>Produit:</strong>
+  <%= @ligne_facture.produit_id %>
+</p>
+
+<p>
+  <strong>Facture:</strong>
+  <%= @ligne_facture.facture_id %>
+</p>
+
+<p>
+  <strong>Quantite:</strong>
+  <%= @ligne_facture.quantite %>
+</p>
+
+<p>
+  <strong>Prixunitaireht:</strong>
+  <%= @ligne_facture.prixUnitaireHT %>
+</p>
+
+<%= link_to 'Edit', edit_ligne_facture_path(@ligne_facture) %> |
+<%= link_to 'Back', facture_path(@ligne_facture.facture_id) %>

@@ -1,4 +1,33 @@
+<h4 class="mb-2">Détails de la facture</h4>
+
 
 <%= render 'details', facture: @facture %>
 
 
+<!-- Lignes Factures -->
+
+<h5 class="mt-4">Contenu de la facture</h5>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Produit</th>
+    <th>Facture</th>
+    <th>Quantite</th>
+    <th>Prixunitaireht</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @ligne_factures.each do |ligne_facture| %>
+    <tr>
+      <td><%= ligne_facture.produit_id %></td>
+      <td><%= ligne_facture.facture_id %></td>
+      <td><%= ligne_facture.quantite %></td>
+      <td><%= ligne_facture.prixUnitaireHT %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>

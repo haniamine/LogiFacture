@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_26_163131) do
+ActiveRecord::Schema.define(version: 2020_12_03_172714) do
 
   create_table "clients", force: :cascade do |t|
     t.string "nom"
@@ -36,6 +36,17 @@ ActiveRecord::Schema.define(version: 2020_11_26_163131) do
     t.index ["user_id"], name: "index_factures_on_user_id"
   end
 
+  create_table "ligne_factures", force: :cascade do |t|
+    t.integer "produit_id", null: false
+    t.string "facture_id", null: false
+    t.integer "quantite"
+    t.float "prixUnitaireHT"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["facture_id"], name: "index_ligne_factures_on_facture_id"
+    t.index ["produit_id"], name: "index_ligne_factures_on_produit_id"
+  end
+
   create_table "produits", force: :cascade do |t|
     t.string "libelle"
     t.float "prixHT"
@@ -54,4 +65,6 @@ ActiveRecord::Schema.define(version: 2020_11_26_163131) do
 
   add_foreign_key "factures", "clients"
   add_foreign_key "factures", "users"
+  add_foreign_key "ligne_factures", "factures"
+  add_foreign_key "ligne_factures", "produits"
 end

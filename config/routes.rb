@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :ligne_factures
   get 'report/index'
   resources :clients
   resources :produits do

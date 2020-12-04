@@ -1,0 +1,37 @@
+<%= form_with(model: ligne_facture, local: true) do |form| %>
+  <% if ligne_facture.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ligne_facture.errors.count, "error") %> prohibited this ligne_facture from being saved:</h2>
+
+      <ul>
+        <% ligne_facture.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :produit_id %>
+    <%= form.text_field :produit_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :facture_id %>
+    <%= form.text_field :facture_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quantite %>
+    <%= form.number_field :quantite %>
+  </div>
+
+  <div class="field">
+    <%= form.label :prixUnitaireHT %>
+    <%= form.text_field :prixUnitaireHT %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
